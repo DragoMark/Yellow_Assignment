@@ -5,6 +5,11 @@ import { useEffect } from 'react'
 
 const Display = () => {
 
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDBaA2IT13I7tOYSQcgzu3iXLi4rA-CfQA",
+    libraries: ['places'],
+  })
+
   const [location, setLocation] = useState({ lat: 40.7128, lng: -74.006 })
 
   useEffect(() => {
@@ -16,22 +21,37 @@ const Display = () => {
     })
   }, [])
 
-  //Get 1000 restarants closest to location from google maps API
   const getRestaurants = () => {
-    console.log("getRestaurants")
-    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location.lat+","+location.lng+"&radius=1000&type=restaurant&key=AIzaSyB-9Q0RZfQk1bq8J4N1fUq8K7y0m5pYQ0I";
-    fetch(url)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
-    
+    const map = new window.google.maps.Map(document.getElementById('map'), {
+      center: location,
+      zoom: 11,
+    })
+    const request = {
+      location: location,
+      radius: '50000',
+      type: ['restaurant'],
+    }
+    const service = new window.google.maps.places.PlacesService(map)
+    service.nearbySearch(request, (results, status) => {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        for (let i = 0; i < (results.length < 1000 ? results.length : 1000) ; i++) {
+          const place = results[i]
+          createMarker(results[i])
+        }
+      }
+    })
+    const createMarker = (place) => {
+      const marker = new window.google.maps.Marker({
+        map,
+        position: place.geometry.location,
+      })
+      window.google.maps.event.addListener(marker, 'click', () => {
+        infowindow.setContent(place.name || '')
+        infowindow.open(map)
+      })
+    } 
+
   }
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDBaA2IT13I7tOYSQcgzu3iXLi4rA-CfQA",
-  })
-
   
   return (
     <div className="w-full flex flex-col justify-start items-center gap-5">
@@ -51,14 +71,14 @@ const Display = () => {
         </div> */}
 
         <div className="w-1/2 h-[25rem]">
-          <h1>map</h1>
           {isLoaded ? (
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
               zoom={15}
               center={location}
+              id="map"
             >
-              <Marker position={location} />
+
             </GoogleMap>
           ) : (
             <h1>Loading...</h1>

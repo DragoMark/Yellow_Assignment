@@ -7,9 +7,11 @@ function App() {
 
   return (
     <>
-      <TopBar />
+      <div className="w-full my-8 flex flex-row justify-center items-center">
+        <TopBar />
+      </div>
 
-      <div>
+      <div className="w-full my-4 flex flex-row justify-center items-center">
         <Display />
       </div>
     </>

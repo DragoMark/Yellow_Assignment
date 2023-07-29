@@ -10,8 +10,9 @@
   --primary-color: #FF5E5E;
   --secondary-color: #5e6eff;
   --accent-color: #bababa;
-  --text-color: black;
-  
+  --text-color1: black;
+  --text-color2: white;
+
   /* text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,4 +22,5 @@
 *{
   margin: 0;
   padding: 0;
+  /* border:none; */
 }

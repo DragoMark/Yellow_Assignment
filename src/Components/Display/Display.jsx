@@ -5,8 +5,9 @@ import { useEffect } from 'react'
 
 const Display = () => {
 
+  // const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDBaA2IT13I7tOYSQcgzu3iXLi4rA-CfQA",
+    googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY,
     libraries: ['places'],
   })
 

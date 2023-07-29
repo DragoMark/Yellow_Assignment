@@ -9,21 +9,27 @@ const Display = () => {
     libraries: ['places'],
   })
 
-  const [location, setLocation] = useState({ lat: 40.7128, lng: -74.006 })
+  const [location, setLocation] = useState({ lat: 12.97561797916139  , lng: 77.60273414488522 })
+
 
   useEffect(() => {
+    getPosition();
+  }, [])
+
+  const getPosition = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLocation({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       })
     })
-  }, [])
+  }
+
 
   const getRestaurants = () => {
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: location,
-      zoom: 11,
+      zoom: 13,
     })
     const request = {
       location: location,

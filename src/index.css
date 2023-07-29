@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 :root {
-  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
-
   color-scheme: light dark;
   font-synthesis: none;
   --primary-color: #FF5E5E;
@@ -13,10 +11,6 @@
   --text-color1: black;
   --text-color2: white;
 
-  /* text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%; */
   width: 100%;
   height: 100%;
 }
@@ -24,5 +18,4 @@
 *{
   margin: 0;
   padding: 0;
-  /* border:none; */
 }
